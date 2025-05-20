@@ -1,0 +1,29 @@
+# Node modules
+node_modules
+.pnpm
+.pnp.*
+*.log
+
+# Build outputs
+.next
+dist
+build
+coverage
+
+# OS/system files
+.DS_Store
+Thumbs.db
+
+# Env and secrets
+.env
+.env.local
+.env.development
+.env.production
+.env.*
+
+# Vercel or Netlify
+.vercel
+
+# Git
+.git
+.gitignore
