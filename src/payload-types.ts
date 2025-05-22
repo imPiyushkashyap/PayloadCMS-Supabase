@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    post: Post;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,6 +78,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    post: PostSelect<false> | PostSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -151,6 +153,70 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post".
+ */
+export interface Post {
+  id: number;
+  title: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Title used for social sharing and search engines. If empty, the main title will be used.
+   */
+  metaTitle?: string | null;
+  /**
+   * Brief description for social sharing and search engines.
+   */
+  metaDescription?: string | null;
+  /**
+   * Image used when sharing the post on social media.
+   */
+  metaImage?: (number | null) | Media;
+  /**
+   * Custom title for SEO purposes. Overrides Meta Title if set.
+   */
+  seoTitle?: string | null;
+  /**
+   * Custom description for SEO purposes. Overrides Meta Description if set.
+   */
+  seoDescription?: string | null;
+  /**
+   * Relevant keywords for search engine optimization.
+   */
+  seoKeywords?:
+    | {
+        keyword: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * URL-friendly identifier. Auto-generated if left blank, but can be customized.
+   */
+  slug: string;
+  /**
+   * Set a specific publish date and time. If in the future, the post will be scheduled.
+   */
+  publishedAt?: string | null;
+  authors?: (number | null) | User;
+  status: 'draft' | 'published' | 'archived';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -163,6 +229,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'post';
+        value: number | Post;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -238,6 +308,31 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "post_select".
+ */
+export interface PostSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  metaTitle?: T;
+  metaDescription?: T;
+  metaImage?: T;
+  seoTitle?: T;
+  seoDescription?: T;
+  seoKeywords?:
+    | T
+    | {
+        keyword?: T;
+        id?: T;
+      };
+  slug?: T;
+  publishedAt?: T;
+  authors?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
