@@ -2,7 +2,7 @@ import { CollectionConfig } from 'payload'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 const Post: CollectionConfig = {
-  slug: 'post',
+  slug: 'posts',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'publishedAt', 'updatedAt'],
