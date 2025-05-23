@@ -69,7 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    post: Post;
+    posts: Post;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -78,7 +78,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    post: PostSelect<false> | PostSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -153,11 +153,12 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "post".
+ * via the `definition` "posts".
  */
 export interface Post {
   id: number;
   title: string;
+  media: number | Media;
   content: {
     root: {
       type: string;
@@ -231,7 +232,7 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'post';
+        relationTo: 'posts';
         value: number | Post;
       } | null);
   globalSlug?: string | null;
@@ -311,10 +312,11 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "post_select".
+ * via the `definition` "posts_select".
  */
-export interface PostSelect<T extends boolean = true> {
+export interface PostsSelect<T extends boolean = true> {
   title?: T;
+  media?: T;
   content?: T;
   metaTitle?: T;
   metaDescription?: T;

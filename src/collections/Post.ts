@@ -53,15 +53,6 @@ const Post: CollectionConfig = {
                 description: 'Brief description for social sharing and search engines.',
               },
             },
-            {
-              name: 'metaImage',
-              type: 'upload',
-              relationTo: 'media',
-              label: 'Meta Image',
-              admin: {
-                description: 'Image used when sharing the post on social media.',
-              },
-            },
           ],
         },
         {
